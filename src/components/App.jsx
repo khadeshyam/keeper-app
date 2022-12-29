@@ -5,16 +5,19 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(JSON.parse(localStorage.getItem("notes")) || []);
 
   function addNote(newNote) {
     setNotes(prevNotes => {
-      return [...prevNotes, newNote];
+      const currNotes = [...prevNotes, newNote];  
+      localStorage.setItem("notes",JSON.stringify(currNotes));
+      return currNotes;
     });
   }
 
   function deleteNote(id) {
     notes.splice(id, 1);
+    localStorage.setItem("notes",JSON.stringify(notes));
     setNotes([...notes]);
     // setNotes(prevNotes => {
     //   return prevNotes.filter((noteItem, index) => {
